@@ -11,14 +11,27 @@ If the result will be the next day, it should show (next day) after the time. If
 If the function is given the optional starting day of the week parameter, then the output should display the day of the week of the result. The day of the week in the output should appear after the time and before the number of days later.
 """
 
-def add_time(start, duration):
-    pass
+morning_evening = ['AM','PM']
+new_time = {"hour": "", "minute": "","meridian":""}
+
+def add_time(start): #, duration):
+    start_dict = split_time(start)
+    print(start_dict)
 
 
 
+#print(f"{new_time['hour']}:{new_time['minute']} {new_time['meridian']}")
 
     #return new_time
 
+def split_time(time):
+    hour = time.split(":").pop(0)
+    minute = time.split(" ")[0].split(":").pop()
+    meridian = time.rsplit(" ").pop()
+    return({"hour": hour, "minute": minute, "meridian": meridian})
+
+
+add_time('3:30 pm')
 # add_time('3:30 PM', '2:12') #should return '5:42 PM'.
 # add_time('11:55 AM', '3:12') #should return '3:07 PM'.
 # add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
