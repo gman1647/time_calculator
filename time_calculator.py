@@ -17,14 +17,19 @@ new_time = {"hour": "", "minute": "","meridian":""}
 def add_time(start, duration):
     start_dict = split_time(start)
     duration = split_time(duration)
-    print(start_dict)
-    print(duration)
+    hours = int(start_dict["hour"]) + int(duration["hour"])
+    minutes = int(start_dict["minute"]) + int(duration["minute"])
+    if minutes > 59:
+        hours = hours + (minutes // 60)
+        minutes = minutes % 60
+        if minutes < 10:
+            minutes = "0" + str(minutes)
+    new_time = str(hours) + ":" + str(minutes) + " PM"
 
+    # print(f"{new_time['hour']}:{new_time['minute']} {new_time['meridian']}")
+    print(new_time)
 
-
-#print(f"{new_time['hour']}:{new_time['minute']} {new_time['meridian']}")
-
-    #return new_time
+    return new_time
 
 def split_time(time):
     hour = time.split(":").pop(0)
@@ -37,7 +42,8 @@ def split_time(time):
         return({"hour": hour, "minute": minute, "meridian": meridian})
 
 
-add_time('3:30 pm', '3:12')
+add_time('3:30 pm', '3:35')
+
 
 # add_time('3:30 PM', '2:12') #should return '5:42 PM'.
 # add_time('11:55 AM', '3:12') #should return '3:07 PM'.
