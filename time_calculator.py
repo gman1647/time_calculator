@@ -14,9 +14,11 @@ If the function is given the optional starting day of the week parameter, then t
 morning_evening = ['AM','PM']
 new_time = {"hour": "", "minute": "","meridian":""}
 
-def add_time(start): #, duration):
+def add_time(start, duration):
     start_dict = split_time(start)
+    duration = split_time(duration)
     print(start_dict)
+    print(duration)
 
 
 
@@ -27,11 +29,16 @@ def add_time(start): #, duration):
 def split_time(time):
     hour = time.split(":").pop(0)
     minute = time.split(" ")[0].split(":").pop()
-    meridian = time.rsplit(" ").pop()
-    return({"hour": hour, "minute": minute, "meridian": meridian})
+    meridian = ""
+    if time.split(" ")[0] == time:
+        return({"hour": hour, "minute": minute})
+    else:
+        meridian = time.rsplit(" ").pop()
+        return({"hour": hour, "minute": minute, "meridian": meridian})
 
 
-add_time('3:30 pm')
+add_time('3:30 pm', '3:12')
+
 # add_time('3:30 PM', '2:12') #should return '5:42 PM'.
 # add_time('11:55 AM', '3:12') #should return '3:07 PM'.
 # add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
