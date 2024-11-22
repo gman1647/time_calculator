@@ -11,7 +11,6 @@ If the result will be the next day, it should show (next day) after the time. If
 If the function is given the optional starting day of the week parameter, then the output should display the day of the week of the result. The day of the week in the output should appear after the time and before the number of days later.
 """
 
-morning_evening = ['AM','PM']
 new_time = {"hour": "", "minute": "","meridian":""}
 
 def add_time(start, duration):
@@ -19,16 +18,21 @@ def add_time(start, duration):
     duration = split_time(duration)
     hours = int(start_dict["hour"]) + int(duration["hour"])
     minutes = int(start_dict["minute"]) + int(duration["minute"])
+    mer = start_dict["meridian"]
     if minutes > 59:
         hours = hours + (minutes // 60)
+        print(hours)
         minutes = minutes % 60
         if minutes < 10:
             minutes = "0" + str(minutes)
-    new_time = str(hours) + ":" + str(minutes) + " PM"
-
-    # print(f"{new_time['hour']}:{new_time['minute']} {new_time['meridian']}")
+        if hours // 12 % 2 != 0:
+            print(hours)
+            mer = meridian_cycle(mer)
+        if hours > 12:
+            print(hours)
+            hours = hours - 12
+    new_time = str(hours) + ":" + str(minutes) + " " + mer
     print(new_time)
-
     return new_time
 
 def split_time(time):
@@ -41,14 +45,14 @@ def split_time(time):
         meridian = time.rsplit(" ").pop()
         return({"hour": hour, "minute": minute, "meridian": meridian})
 
+def meridian_cycle(mer):
+    mer = "AM" if mer == "PM" else "PM"
+    return mer
 
-add_time('3:30 pm', '3:35')
-
-
-# add_time('3:30 PM', '2:12') #should return '5:42 PM'.
-# add_time('11:55 AM', '3:12') #should return '3:07 PM'.
+add_time('3:30 PM', '2:12') #should return '5:42 PM'.
+add_time('11:55 AM', '3:12') #should return '3:07 PM'.
 # add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
-# add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
+add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
 # add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
 # add_time('3:30 PM', '2:12', 'Monday') #should return '5:42 PM, Monday'.
 # add_time('2:59 AM', '24:00', 'saturDay') #should return '2:59 AM, Sunday (next day)'.
