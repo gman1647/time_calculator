@@ -18,17 +18,29 @@ def add_time(start, duration):
     duration = split_time(duration)
     hours = int(start_dict["hour"]) + int(duration["hour"])
     minutes = int(start_dict["minute"]) + int(duration["minute"])
-    mer = start_dict["meridian"]
-    if minutes > 59:
-        hours = hours + (minutes // 60)
-        minutes = minutes % 60
-        if minutes < 10:
-            minutes = "0" + str(minutes)
-        if hours // 12 % 2 != 0:
-            mer = meridian_cycle(mer)
-        if hours > 12:
-            hours = hours - 12
+    minutes = int(minutes) + (int(hours) * 60)
+    print(minutes)
     days = day_checker(start_dict["hour"], duration["hour"], start_dict["meridian"])
+    mer = start_dict["meridian"]
+    # if minutes > 59:
+    #     hours = hours + (minutes // 60)
+    #     minutes = minutes % 60
+    #     if minutes < 10:
+    #         minutes = "0" + str(minutes)
+    #     if hours // 12 % 2 != 0:
+    #         mer = meridian_cycle(mer)
+    # if hours > 24:
+    #     hours = hours - (24 * days)
+    # elif hours > 12:
+    #     hours = hours -12
+    # else:
+    #     pass
+    # if days == 0:
+    #     days = ""
+    # elif days == 1:
+    #     days = " (next day)"
+    # else:
+    #     days = "(" + str(days) + " days later)"
     new_time = str(hours) + ":" + str(minutes) + " " + mer + days
     print(new_time)
     return new_time
@@ -49,22 +61,43 @@ def meridian_cycle(mer):
 
 def day_checker(start, duration, mer):
     start = int(start) + 12 if mer == "PM" else start
-    if int(start) + int(duration) > 48:
-        days = (int(start) + int(duration))//24
-        return (f' ({days} days later)')
-    elif int(start) + int(duration) > 24:
-        return (" (next day)")
+    days = (int(start) + int(duration))//24
+    return(days)
+
+def make_minutes(minutes):
+    hours = ""
+    if minutes > 59:
+        hours = minutes // 60
+        minutes = minutes % 60
     else:
-        return ""
+         minutes = minutes
+    if minutes < 10:
+        minutes = "0" + str(minutes)
+    return [minutes, hours]
 
+print(make_minutes(125))
 
+# def make_hours(minutes):
+# if hours // 12 % 2 != 0:
+#             mer = meridian_cycle(mer)
+#     if hours > 24:
+#         hours = hours - (24 * days)
+#     elif hours > 12:
+#         hours = hours -12
+# def make_days(hours):
+#     if days == 0:
+#         days = ""
+#     elif days == 1:
+#         days = " (next day)"
+#     else:
+#         days = "(" + str(days) + " days later)"
 
-add_time('3:30 PM', '2:12') #should return '5:42 PM'.
-add_time('11:55 AM', '3:12') #should return '3:07 PM'.
-add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
-add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
-add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
-# add_time('3:30 PM', '2:12', 'Monday') #should return '5:42 PM, Monday'.
+# add_time('3:30 PM', '2:12') #should return '5:42 PM'.
+# add_time('11:55 AM', '3:12') #should return '3:07 PM'.
+# add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
+# add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
+# add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
+# # add_time('3:30 PM', '2:12', 'Monday') #should return '5:42 PM, Monday'.
 # add_time('2:59 AM', '24:00', 'saturDay') #should return '2:59 AM, Sunday (next day)'.
 # add_time('11:59 PM', '24:05', 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
 # add_time('8:16 PM', '466:02', 'tuesday') #should return '6:18 AM, Monday (20 days later)'.
@@ -72,7 +105,7 @@ add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
 #Waiting:4. Expected period to change from AM to PM at 12:00.
 #Waiting:8. Expected adding 0:00 to return the initial time.
 
-add_time('3:30 PM', '2:12') #, 'Monday') #should return '5:42 PM, Monday'.
-add_time('2:59 AM', '24:00')#, 'saturDay') #should return '2:59 AM, Sunday (next day)'.
-add_time('11:59 PM', '24:05')#, 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
-add_time('8:16 PM', '466:02')
+# add_time('3:30 PM', '2:12') #, 'Monday') #should return '5:42 PM, Monday'.
+# add_time('2:59 AM', '24:00')#, 'saturDay') #should return '2:59 AM, Sunday (next day)'.
+# add_time('11:59 PM', '24:05')#, 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
+# add_time('8:16 PM', '466:02')
