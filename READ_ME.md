@@ -5,3 +5,18 @@ Create `split_time` function to take input in the form of hh:mm AM/PM and store 
 Update `split_time` to handle duration
 
 Update `add_time` to handle very basic calculation (w/in same meridian) Meridian calculation not worked on yet, just testing the hour and minute addition. Need to work on changing meridian.
+
+Add `meridian_cycle` to switch from AM to PM as needed.
+
+Add `day_checker` function to see how many days elapsed since the first time entered.
+
+Bugs:
+`day_checker` does not account for minutes
+hours > 12 does not account for more than 12 hours in:
+`    if minutes < 10:
+            minutes = "0" + str(minutes)
+        if hours // 12 % 2 != 0:
+            mer = meridian_cycle(mer)
+        if hours > 12:
+            hours = hours - 12
+   `

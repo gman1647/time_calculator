@@ -21,17 +21,15 @@ def add_time(start, duration):
     mer = start_dict["meridian"]
     if minutes > 59:
         hours = hours + (minutes // 60)
-        print(hours)
         minutes = minutes % 60
         if minutes < 10:
             minutes = "0" + str(minutes)
         if hours // 12 % 2 != 0:
-            print(hours)
             mer = meridian_cycle(mer)
         if hours > 12:
-            print(hours)
             hours = hours - 12
-    new_time = str(hours) + ":" + str(minutes) + " " + mer
+    days = day_checker(start_dict["hour"], duration["hour"], start_dict["meridian"])
+    new_time = str(hours) + ":" + str(minutes) + " " + mer + days
     print(new_time)
     return new_time
 
@@ -49,11 +47,23 @@ def meridian_cycle(mer):
     mer = "AM" if mer == "PM" else "PM"
     return mer
 
+def day_checker(start, duration, mer):
+    start = int(start) + 12 if mer == "PM" else start
+    if int(start) + int(duration) > 48:
+        days = (int(start) + int(duration))//24
+        return (f' ({days} days later)')
+    elif int(start) + int(duration) > 24:
+        return (" (next day)")
+    else:
+        return ""
+
+
+
 add_time('3:30 PM', '2:12') #should return '5:42 PM'.
 add_time('11:55 AM', '3:12') #should return '3:07 PM'.
-# add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
+add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
 add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
-# add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
+add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
 # add_time('3:30 PM', '2:12', 'Monday') #should return '5:42 PM, Monday'.
 # add_time('2:59 AM', '24:00', 'saturDay') #should return '2:59 AM, Sunday (next day)'.
 # add_time('11:59 PM', '24:05', 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
@@ -61,3 +71,8 @@ add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
 #Waiting:3. Expected time to end with '(next day)' when it is the next day.
 #Waiting:4. Expected period to change from AM to PM at 12:00.
 #Waiting:8. Expected adding 0:00 to return the initial time.
+
+add_time('3:30 PM', '2:12') #, 'Monday') #should return '5:42 PM, Monday'.
+add_time('2:59 AM', '24:00')#, 'saturDay') #should return '2:59 AM, Sunday (next day)'.
+add_time('11:59 PM', '24:05')#, 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
+add_time('8:16 PM', '466:02')
