@@ -11,7 +11,15 @@ If the result will be the next day, it should show (next day) after the time. If
 If the function is given the optional starting day of the week parameter, then the output should display the day of the week of the result. The day of the week in the output should appear after the time and before the number of days later.
 """
 
-new_time = {"hour": "", "minute": "","meridian":""}
+# new_time = {"hour": "", "minute": "","meridian":""}
+
+days_of_the_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+index = days_of_the_week.index('Tuesday')
+# print(index)
+index = index + 8 // 7
+# print(days_of_the_week[index])
+
 
 def add_time(start, duration):
     start_dict = split_time(start)
@@ -82,11 +90,22 @@ def make_days(min):
         days = ""
     return(days)
 
-add_time('3:30 PM', '2:12') #should return '5:42 PM'.
-add_time('11:55 AM', '3:12') #should return '3:07 PM'.
-add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
-add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
-add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
+def make_day_of_the_week(min, day):
+    days = min // 1440
+    index = days_of_the_week.index(day)
+    index = (index + days) % 7
+    day_of_the_week = days_of_the_week[index]
+    return day_of_the_week
+
+testing = make_day_of_the_week(1440,'Saturday')
+print(testing)
+
+
+# add_time('3:30 PM', '2:12') #should return '5:42 PM'.
+# add_time('11:55 AM', '3:12') #should return '3:07 PM'.
+# add_time('2:59 AM', '24:00') #should return '2:59 AM (next day)'.
+# add_time('11:59 PM', '24:05') # should return '12:04 AM (2 days later)'.
+# add_time('8:16 PM', '466:02') # should return '6:18 AM (20 days later)'.
 # # add_time('3:30 PM', '2:12', 'Monday') #should return '5:42 PM, Monday'.
 # add_time('2:59 AM', '24:00', 'saturDay') #should return '2:59 AM, Sunday (next day)'.
 # add_time('11:59 PM', '24:05', 'Wednesday') #should return '12:04 AM, Friday (2 days later)'.
