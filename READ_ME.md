@@ -24,3 +24,5 @@ Updated all functions to work based off of minutes. New functions include:
 `make_mer`
 
 Made `make_day_of_the_week` function to loop through days of the week based on the minutes. Now I need to handle a variety of string input errors and this project will be completed.
+
+All functions updated and all tests passed. This project is complete. The functions are a bit verbose, but at this stage in my learning, that is okay. On to the next challenge!
